@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.min.css" rel="stylesheet" type="text/css"/>
+    <script src="https://cdn.tailwindcss.com"></script>
+    {#    <script src="https://cdn.tailwindcss.com"></script>#}
+</head>
+<body>
+{#    {% for b in all_books %}#}
+{#        <div>#}
+{#            {{ b.title }}#}
+{#            <span>#}
+{#                {{ b.author.name }}#}
+{#            </span>#}
+{#            {{ b.isbn }}#}
+{#        </div>#}
+{#    {% endfor %}#}
+<main class="min-h-[100vh] py-20 flex flex-col justify-center items-center bg-gradient-to-r from-indigo-500 from-10% via-sky-500 via-30% to-emerald-500 to-90%">
+    <h1 class="font-bold text-7xl text-green-200 p-14 ">کتاب ها</h1>
+    <div class="mt-10 text-red-500 text-8xl text-center grid grid-cols-4 gap-10">
+        {% for b in all_books %}
+            <div class="rounded-lg hover:bg-black/70 transition cursor-pointer backdrop-blur-lg bg-black/30 gap-6 text-white font-bold p-10 flex flex-col">
+                <strong class="block text-3xl text-yellow-400">{{ b.title }}</strong>
+                <span class="block w-full text-center text-yellow-800 text-2xl">{{ b.author.name }}</span>
+                <span class="block w-full text-center text-yellow-200 text-2xl"> {{ b.isbn }}</span>
+                <span class="block w-full text-left !text-gray-700 text-xs">{{ b.id }}</span>
+            </div>
+        {% endfor %}
+    </div>
+</main>
+</body>
+</html>

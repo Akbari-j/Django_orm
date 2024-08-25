@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.min.css" rel="stylesheet" type="text/css"/>
+    <script src="https://cdn.tailwindcss.com"></script>
+    {#    <script src="https://cdn.tailwindcss.com"></script>#}
+</head>
+<body>
+<main class="min-h-[100vh] py-20 flex flex-col justify-center items-center bg-gradient-to-r from-indigo-500 from-10% via-sky-500 via-30% to-emerald-500 to-90%">
+    <div class="mt-10 text-red-500 text-8xl text-center grid gap-10">
+        {#                     {% for i in all_bs %}#}
+        <div class="rounded-lg hover:bg-black/70 transition cursor-pointer backdrop-blur-lg bg-black/30 gap-6 text-white font-bold p-10 flex flex-col justify-center items-center">
+            <h1 class="font-bold text-6xl text-green-200 p-14 ">{{ b.title }}</h1>
+            {#                    <strong class="block text-3xl text-yellow-400">{{ b.title  }}</strong>#}
+            <span class="block w-full text-center text-yellow-800 text-4xl">{{ b.author.name }}</span>
+            <span class="block w-full text-center text-yellow-200 text-2xl">{{ b.isbn }}</span>
+            <span class="block w-full text-center text-yellow-200 text-2xl">{{ b.publish_date }}</span>
+        </div>
+        {#                     {% endfor %}#}
+    </div>
+</main>
+</body>
+</html>
