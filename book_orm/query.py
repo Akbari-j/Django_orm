@@ -16,6 +16,8 @@ Author.objects.filter(firstname__contains = 'mo').values('firstname','popularity
 # <QuerySet [{'firstname': 'Timothy', 'popularity_score': 3}, {'firstname': 'Timothy', 'popularity_score': 44}]>
 
 # 4) Fetch list of all the authors whose ids are in the list = [1, 3, 23, 43, 134, 25].
+Author.objects.filter(id__in=[1, 3, 13, 43, 134, 22]).values('firstname','id')
+# <QuerySet [{'firstname': 'جین', 'id': 1}, {'firstname': 'هلیا', 'id': 3}, {'firstname': 'Timothy', 'id': 13}, {'firstname': 'Dana', 'id': 22}]>
 
 
 5) Fetch list of all the publishers who joined after or in September 2012, output list should only
