@@ -7,17 +7,14 @@ class Author(models.Model):
     address = models.CharField(max_length=200, null=True)
     zipcode = models.IntegerField(null=True)
     telephone = models.CharField(max_length=100, null=True)
-    recommendedby = models.ForeignKey('Author',
-                                      on_delete=models.CASCADE, related_name='recommended_authors',
+    recommendedby = models.ForeignKey('Author', on_delete=models.CASCADE, related_name='recommended_authors',
                                       related_query_name='recommended_authors', null=True)
     joindate = models.DateField()
     popularity_score = models.IntegerField()
-    followers = models.ManyToManyField('User',
-                                       related_name='followed_authors',
+    followers = models.ManyToManyField('User', related_name='followed_authors',
                                        related_query_name='followed_authors')
 
     def __str__(self):
-
         return self.firstname + ' ' + self.lastname
 
 
@@ -33,7 +30,6 @@ class Books(models.Model):
                                   related_query_name='books')
 
     def __str__(self):
-
         return self.title
 
 
@@ -46,7 +42,6 @@ class Publisher(models.Model):
     popularity_score = models.IntegerField()
 
     def __str__(self):
-
         return self.firstname + ' ' + self.lastname
 
 
@@ -55,5 +50,4 @@ class User(models.Model):
     email = models.CharField(max_length=100)
 
     def __str__(self):
-
         return self.username
