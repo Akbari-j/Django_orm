@@ -20,12 +20,31 @@ Author.objects.filter(id__in=[1, 3, 13, 43, 134, 22]).values('firstname','id')
 # <QuerySet [{'firstname': 'جین', 'id': 1}, {'firstname': 'هلیا', 'id': 3}, {'firstname': 'Timothy', 'id': 13}, {'firstname': 'Dana', 'id': 22}]>
 
 
-5) Fetch list of all the publishers who joined after or in September 2012, output list should only
-contain first name and join date of publisher. Order by join date.
-6) Add new users in followers of the author with pk = 1.
-7) Remove one user from the followers of the author with pk = 1.
-8) Get first names of all the authors, whose user with pk = 1 is following. ( Without Accessing
-Author.objects manager )
+# 5) Fetch list of all the publishers who joined after or in September 2012, output list should only contain first name and join date of publisher. Order by join date.
+Author.objects.filter(joindate__gte = '2012-08-01').values('firstname',"joindate").order_by('joindate')
+
+# 6) Add new users in followers of the author with pk = 1.
+# author = Author.objects.create(
+#     firstname='sajad',
+#     lastname='zebarjadi',
+#     joindate='1403-06-05',
+#     popularity_score=100,
+#     recommendedby_id=1
+# )
+author2 = Author.objects.get(pk=1)
+user1 = User.objects.get(pk=1)
+user2= User.objects.create(username = 'ebrahim',email = 'e@Sh.com')
+author2.followers.add(user1,user2)
+
+# 7) Remove one user from the followers of the author with pk = 1.
+author2.followers.all()
+# <QuerySet [<User: کاربر1>, <User: ebrahim>]>
+author2.followers.remove(user1)
+author2.followers.all()
+# <QuerySet [<User: ebrahim>]>
+
+8) Get first names of all the authors, whose user with pk = 1 is following. ( Without Accessing Author.objects manager )
+
 9) Retrieve all authors who did not join in 2012.
 10) Retrieve Oldest author, Newest author, Average popularity score of authors, sum of price of all
 books in database.
