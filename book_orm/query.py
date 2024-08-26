@@ -43,7 +43,9 @@ author2.followers.remove(user1)
 author2.followers.all()
 # <QuerySet [<User: ebrahim>]>
 
-8) Get first names of all the authors, whose user with pk = 1 is following. ( Without Accessing Author.objects manager )
+# 8) Get first names of all the authors, whose user with pk = 1 is following. ( Without Accessing Author.objects manager )
+follwed_author_by_user1 = user1.followed_authors.all()
+[(f.firstname, f.id) for f in follwed_author_by_user1]
 
 9) Retrieve all authors who did not join in 2012.
 10) Retrieve Oldest author, Newest author, Average popularity score of authors, sum of price of all
