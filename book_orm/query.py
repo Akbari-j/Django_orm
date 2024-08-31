@@ -1,4 +1,6 @@
 # from .models import *
+from django.db.models import Max
+
 from book_orm.models import *
 
 
@@ -24,36 +26,40 @@ Author.objects.filter(id__in=[1, 3, 13, 43, 134, 22]).values('firstname','id')
 Author.objects.filter(joindate__gte = '2012-08-01').values('firstname',"joindate").order_by('joindate')
 
 # 6) Add new users in followers of the author with pk = 1.
-# author = Author.objects.create(
-#     firstname='sajad',
-#     lastname='zebarjadi',
-#     joindate='1403-06-05',
-#     popularity_score=100,
-#     recommendedby_id=1
-# )
-author2 = Author.objects.get(pk=1)
+author = Author.objects.get(pk=1)
 user1 = User.objects.get(pk=1)
 user2= User.objects.create(username = 'ebrahim',email = 'e@Sh.com')
-author2.followers.add(user1,user2)
+author.followers.add(user1,user2)
 
 # 7) Remove one user from the followers of the author with pk = 1.
-author2.followers.all()
+author.followers.all()
 # <QuerySet [<User: کاربر1>, <User: ebrahim>]>
-author2.followers.remove(user1)
-author2.followers.all()
+author.followers.remove(user1)
+author.followers.all()
 # <QuerySet [<User: ebrahim>]>
 
 # 8) Get first names of all the authors, whose user with pk = 1 is following. ( Without Accessing Author.objects manager )
 follwed_author_by_user1 = user1.followed_authors.all()
 [(f.firstname, f.id) for f in follwed_author_by_user1]
 
-9) Retrieve all authors who did not join in 2012.
-10) Retrieve Oldest author, Newest author, Average popularity score of authors, sum of price of all
-books in database.
-11) Retrieve all authors who have no recommender, recommended by field is null.
-12)
-Maximum popularity score of publisher among all the publishers who published a book for the
-author with pk = 1. (Reverse Foreign Key hop)
+# 9) Retrieve all authors who did not join in 2012.
+Author.objects.all().exclude(joindate__year = '2012').values('joindate').order_by('joindate')
+
+# 10) Retrieve Oldest author, Newest author, Average popularity score of authors, sum of price of all books in database.
+from django.db.models import Max,Min,Avg,Sum
+Newest_author = Author.objects.aggregate(Max('joindate'))
+Oldest_author = Author.objects.aggregate(Min('joindate'))
+avg_popularity = Author.objects.aggregate(Avg('popularity_score'))
+sum_price = Books.objects.aggregate(Sum('price'))
+
+# 11) Retrieve all authors who have no recommender, recommended by field is null.
+Author.objects.filter(recommendedby = None)
+
+# 12)Maximum popularity score of publisher among all the publishers who published a book for the
+# author with pk = 1. (Reverse Foreign Key hop)
+
+
+
 13) Count the number of authors who have written a book which contains the phrase ‘ab’ case
 insensitive.
 14) Total price of books written by author with primary key = 1. ( Aggregation over related model ),

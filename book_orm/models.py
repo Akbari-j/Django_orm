@@ -15,7 +15,7 @@ class Author(models.Model):
                                        related_query_name='followed_authors')
 
     def __str__(self):
-        return self.firstname + ' ' + self.lastname
+        return self.firstname + ' ' + self.lastname + ' ' + self.joindate
 
 
 class Books(models.Model):
