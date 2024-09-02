@@ -60,9 +60,18 @@ Author.objects.filter(recommendedby = None)
 
 
 
-13) Count the number of authors who have written a book which contains the phrase ‘ab’ case
-insensitive.
-14) Total price of books written by author with primary key = 1. ( Aggregation over related model ),
-oldest book written by author with pk = 1, latest book written by author with pk = 1.
-15) Among the publishers in the Publishers table what is the oldest book any publisher has
-published.
+# 13) Count the number of authors who have written a book which contains the phrase ‘ab’  insensitive.
+author = Author.objects.filter(books__title__contains = 're' )
+for a in author:
+    for book in a.books.all():
+        print(book.title)
+
+
+# 14) Total price of books written by author with primary key = 1. ( Aggregation over related model ),
+# oldest book written by author with pk = 1, latest book written by author with pk = 1.
+
+sum_price = Books.objects.filter(author_id=1).aggregate(Sum('price'))['price__sum']
+latest_book = Books.objects.filter(author_id=1).aggregate(Max("published_date"))
+oldest_book = Books.objects.filter(author_id=1).aggregate(Min("published_date"))
+
+# 15) Among the publishers in the Publishers table what is the oldest book any publisher has published.
