@@ -75,3 +75,23 @@ latest_book = Books.objects.filter(author_id=1).aggregate(Max("published_date"))
 oldest_book = Books.objects.filter(author_id=1).aggregate(Min("published_date"))
 
 # 15) Among the publishers in the Publishers table what is the oldest book any publisher has published.
+
+from django.db.models import OuterRef, Subquery
+from django.db.models import Min
+
+# پیدا کردن تاریخ قدیمی‌ترین کتاب هر ناشر
+oldest_books = Publisher.objects.annotate(oldest_date=Min('books__published_date'))
+
+# استفاده از یک زیرکوئری برای یافتن نام قدیمی‌ترین کتاب بر اساس تاریخ انتشار
+oldest_books_with_title = Publisher.objects.annotate(
+    oldest_book_title=Subquery(
+        Books.objects.filter(
+            publisher=OuterRef('pk'),
+            published_date=OuterRef('oldest_date')
+        ).values('title')[:1]
+    )
+)
+
+# نمایش نام ناشر و قدیمی‌ترین کتاب منتشر شده توسط او
+for publisher in oldest_books_with_title:
+    print(f"Publisher: {publisher.name}, Oldest Book: {publisher.oldest_book_title}")
